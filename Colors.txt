@@ -1,0 +1,10 @@
+Primary : #2378EF
+Primary Dark : #004A9F
+Primary Light : #63A3FF
+
+Light Background : #F6F6F6
+
+Border 1  : #A7A7A7
+Border 2  : #C4C4C4
+
+Green Color : #43B833
