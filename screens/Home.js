@@ -1,15 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Modal from "../components/Modal";
+
 import { TextInput } from "react-native";
 import InputComponent from "../components/InputComponent";
 import Green_Button from "../components/Green_Button";
 import Blue_Button from "../components/Blue_Button";
 import Transparent_Button from "../components/Transparent_Button";
 import { TouchableOpacity } from "react-native";
+import PopModal from "../components/PopModal";
+import { useState } from "react";
 
-export default function LoginPage(props) {
+
+export default function Home(props) {
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = (bool) => {
+    setShowModal(bool)
+  }
   return (
     <LinearGradient
       style={styles.container}
@@ -24,18 +31,12 @@ export default function LoginPage(props) {
           <Text style={[styles.whiteText, styles.ligtText]}>Buy your all needs in one place</Text>
         </View>
       </View>
+      <PopModal visible={showModal} closeModal={(bool) => { setShowModal(bool) }} >
+        <Text>CWx</Text>
+      </PopModal>
 
-      <Modal>
-        <InputComponent placeHolder="Email Address" />
-        <InputComponent placeHolder="Password" secureTextEntry={true} />
-        <View style={styles.hLine}></View>
-        <Blue_Button name="Login" onPress={() => { props.navigation.navigate("Home") }} />
-      </Modal>
-      <View style={{ marginTop: 50 }}></View>
-      <Green_Button name="Create New Account" onPress={() => { props.navigation.navigate("Create Account") }} />
-      <TouchableOpacity style={{ marginTop: 30 }} onPress={() => { props.navigation.navigate("Help") }} >
-        <Text style={styles.whiteText}>Help !</Text>
-      </TouchableOpacity>
+      <Blue_Button name="Show Modal" onPress={() => { closeModal(true) }} />
+      <Transparent_Button name="Go Back" onPress={() => { props.navigation.goBack() }} />
       <StatusBar backgroundColor="#fff" />
     </LinearGradient>
   );
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textContainer: {
+
     marginBottom: 40
   },
   whiteText: {
@@ -68,4 +70,5 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     marginVertical: 5,
   },
+
 });

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Blue_Button(props) {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} {...props}>
       <Text style={styles.whiteText}>{props.name}</Text>
     </TouchableOpacity>
   );

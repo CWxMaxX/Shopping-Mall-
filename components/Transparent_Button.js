@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Transparent_Button(props) {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={{ ...styles.button, ...props.style }} {...props} >
       <Text style={styles.text}>{props.name}</Text>
     </TouchableOpacity>
   );

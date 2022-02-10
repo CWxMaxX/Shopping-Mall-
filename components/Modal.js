@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default function Modal({ children }) {
-  return <View style={styles.container}>{children}</View>;
+export default function Modal({ children }, props) {
+  return <View style={styles.container} {...props} >{children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -15,5 +15,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 20,
+    elevation: 5
   },
 });
