@@ -1,23 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
 import Modal from '../components/Modal';
 import InputComponent from '../components/InputComponent';
-import { TouchableOpacity } from 'react-native';
 import Blue_Button from '../components/Blue_Button';
 import Transparent_Button from '../components/Transparent_Button';
 import { StatusBar } from "expo-status-bar";
-import { ScrollView } from 'react-native';
+import LinerGradientComponet from '../components/LinerGradientComponet';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 
 export default function CreateAccountPAge(props) {
     return (
-        <LinearGradient
-            style={styles.container}
-            colors={["#004A9F", "#63A3FF"]}
-            start={[0, 0.1]}
-            end={[0, 0.5]}
-        >
+        <LinerGradientComponet>
 
             <View style={styles.textContainer}>
                 <View style={{ alignItems: "center" }}>
@@ -25,9 +20,16 @@ export default function CreateAccountPAge(props) {
                     <Text style={[styles.whiteText, styles.ligtText]}>Buy your all needs in one place</Text>
                 </View>
             </View>
-            <ScrollView style={{ width: "100%", }} contentContainerStyle={{ alignItems: "center" }} showsVerticalScrollIndicator={false}>
-                <View style={{ paddingTop: 100, width: "100%", alignItems: "center" }}>
-                    <Modal>
+            <KeyboardAwareScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ width: "100%" }}
+                contentContainerStyle={{ alignItems: "center" }}
+                enableOnAndroid={true}
+                extraHeight={200}
+            >
+
+                <View style={{ paddingTop: 60, width: "100%", alignItems: "center", }}>
+                    <Modal >
                         <Text style={styles.subTitle}>Create Account</Text>
                         <InputComponent placeHolder="Name" />
                         <InputComponent placeHolder="Email" />
@@ -56,29 +58,26 @@ export default function CreateAccountPAge(props) {
                         <Transparent_Button name="Cancel" onPress={() => { props.navigation.goBack() }} />
                     </Modal>
                 </View>
-            </ScrollView>
+                <View style={{ height: 200 }} ></View>
+
+
+            </KeyboardAwareScrollView>
             <StatusBar backgroundColor="#fff" />
-        </LinearGradient>
+
+        </LinerGradientComponet>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 25,
-        alignItems: "center",
-    },
+
     textContainer: {
+        // marginTop: 15,
         marginBottom: 40,
         position: 'absolute',
-
-
-
     },
     whiteText: {
         color: "#fff",
     },
-
     titleText: {
         fontSize: 36,
         fontWeight: "bold",
@@ -107,7 +106,4 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'space-between'
     }
-
-
-
 });

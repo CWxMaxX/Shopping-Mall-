@@ -1,29 +1,24 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Modal } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-
-import { TextInput } from "react-native";
-import InputComponent from "../components/InputComponent";
-import Green_Button from "../components/Green_Button";
+import { StyleSheet, Text, View, } from "react-native";
 import Blue_Button from "../components/Blue_Button";
 import Transparent_Button from "../components/Transparent_Button";
-import { TouchableOpacity } from "react-native";
 import PopModal from "../components/PopModal";
 import { useState } from "react";
+import LinearGradientComponet from '../components/LinerGradientComponet'
+
 
 
 export default function Home(props) {
+
+
   const [showModal, setShowModal] = useState(false);
   const closeModal = (bool) => {
     setShowModal(bool)
   }
+
+
   return (
-    <LinearGradient
-      style={styles.container}
-      colors={["#004A9F", "#63A3FF"]}
-      start={[0, 0.1]}
-      end={[0, 0.5]}
-    >
+    <LinearGradientComponet>
       <View style={styles.textContainer}>
         <Text style={styles.whiteText}>Welcome</Text>
         <View style={{ alignItems: "center" }}>
@@ -38,16 +33,12 @@ export default function Home(props) {
       <Blue_Button name="Show Modal" onPress={() => { closeModal(true) }} />
       <Transparent_Button name="Go Back" onPress={() => { props.navigation.goBack() }} />
       <StatusBar backgroundColor="#fff" />
-    </LinearGradient>
+    </LinearGradientComponet>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 25,
-    alignItems: "center",
-  },
+
   textContainer: {
 
     marginBottom: 40

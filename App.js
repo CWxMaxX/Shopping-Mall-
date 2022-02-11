@@ -4,8 +4,8 @@ import CreateAccountPage from './screens/CreateAccountPAge';
 import HelpPage from './screens/HelpPage';
 import LoginPage from './screens/LoginPage';
 import Home from './screens/Home';
-import NavigationStack from './navigation/NavigationStack';
 import PopModal from './components/PopModal';
+import NavigationStack from './navigation/NavigationStack';
 
 
 
@@ -30,6 +30,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
 
-});

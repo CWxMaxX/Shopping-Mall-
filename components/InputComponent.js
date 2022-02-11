@@ -4,11 +4,14 @@ import React from "react";
 export default function InputComponent(props) {
   return (
     <TextInput
-      style={{ ...styles.inputStyle, ...props.style }}
+      {...props}
+
+      style={{ ...styles.inputStyle, ...props.style, }}
       placeholder={props.placeHolder}
       secureTextEntry={props.secureTextEntry}
       multiline={props.multiline}
-      {...props}
+      autoCapitalize={props.autoCapitalize}
+
     />
   );
 }
