@@ -1,47 +1,60 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Blue_Button from "../components/Blue_Button";
 import Transparent_Button from "../components/Transparent_Button";
 import PopModal from "../components/PopModal";
 import { useState } from "react";
-import LinearGradientComponet from '../components/LinerGradientComponet'
-
-
+import LinearGradientComponet from "../components/LinerGradientComponet";
+import { auth } from "../firebase";
 
 export default function Home(props) {
-
-
   const [showModal, setShowModal] = useState(false);
   const closeModal = (bool) => {
-    setShowModal(bool)
-  }
+    setShowModal(bool);
+  };
 
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        props.navigation.replace("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
 
   return (
     <LinearGradientComponet>
       <View style={styles.textContainer}>
-        <Text style={styles.whiteText}>Welcome</Text>
+        <Text style={styles.whiteText}>Welcome {auth.currentUser?.email}</Text>
         <View style={{ alignItems: "center" }}>
           <Text style={[styles.whiteText, styles.titleText]}>Shopping Mall</Text>
           <Text style={[styles.whiteText, styles.ligtText]}>Buy your all needs in one place</Text>
         </View>
       </View>
-      <PopModal visible={showModal} closeModal={(bool) => { setShowModal(bool) }} >
+      <PopModal
+        visible={showModal}
+        closeModal={(bool) => {
+          setShowModal(bool);
+        }}
+      >
         <Text>CWx</Text>
       </PopModal>
 
-      <Blue_Button name="Show Modal" onPress={() => { closeModal(true) }} />
-      <Transparent_Button name="Go Back" onPress={() => { props.navigation.goBack() }} />
+      <Blue_Button
+        name="Show Modal"
+        onPress={() => {
+          closeModal(true);
+        }}
+      />
+      <Transparent_Button name="Sign Out" onPress={handleSignOut} textColor="#fff" />
       <StatusBar backgroundColor="#fff" />
     </LinearGradientComponet>
   );
 }
 
 const styles = StyleSheet.create({
-
   textContainer: {
-
-    marginBottom: 40
+    marginBottom: 40,
   },
   whiteText: {
     color: "#fff",
@@ -61,5 +74,4 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     marginVertical: 5,
   },
-
 });
