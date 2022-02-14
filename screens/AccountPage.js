@@ -1,7 +1,7 @@
 /** @format */
 
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal";
 import InputComponent from "../components/InputComponent";
@@ -13,6 +13,17 @@ import { auth } from "../firebase";
 import LinerGradientComponent from "../components/LinerGradientComponent";
 
 export default function AccountPage(props) {
+	const [user, setUser] = useState("");
+	const getUser = () => {
+		return fetch("http://192.168.1.2:4000/getUser")
+			.then((response) => response.json())
+			.then((json) => {
+				setUser(json);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
 	const handleSignOut = () => {
 		auth
 			.signOut()
@@ -21,18 +32,22 @@ export default function AccountPage(props) {
 			})
 			.catch((error) => alert(error.message));
 	};
+	useEffect(() => {
+		getUser();
+	}, []);
+
 	return (
 		<LinerGradientComponent>
 			<View style={styles.textContainer}>
 				<View style={{ alignItems: "center" }}>
 					<Text style={[styles.whiteText, styles.titleText]}>Shopping Mall</Text>
-					<Text style={[styles.whiteText, styles.ligtText]}>Buy your all needs in one place</Text>
+					<Text style={[styles.whiteText, styles.lightText]}>Buy your all needs in one place</Text>
 				</View>
 			</View>
 			<Modal>
 				<Text style={styles.subTitle}>Account Details</Text>
-				<InputComponent placeHolder='Chamith' />
-				<InputComponent placeHolder={auth.currentUser?.email} />
+				<InputComponent placeHolder={user.fname + " " + user.lname} />
+				<InputComponent placeHolder={user.email} />
 				<View style={styles.hLine}></View>
 				<TouchableOpacity>
 					<Text style={styles.blueText}>Change Address ?</Text>
@@ -79,7 +94,7 @@ const styles = StyleSheet.create({
 		fontSize: 36,
 		fontWeight: "bold",
 	},
-	ligtText: {
+	lightText: {
 		fontWeight: "100",
 	},
 	subTitle: {

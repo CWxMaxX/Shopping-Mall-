@@ -1,25 +1,76 @@
 /** @format */
 
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Blue_Button from "../components/Blue_Button";
-import Transparent_Button from "../components/Transparent_Button";
 import PopModal from "../components/PopModal";
-import { useState } from "react";
 import LinearGradientComponent from "../components/LinerGradientComponent";
-import { auth } from "../firebase";
 import TabNavigation from "../navigation/TabNavigation";
+import Card from "../components/Card";
+import { FlatList } from "react-native";
 
 export default function Home(props) {
 	const [showModal, setShowModal] = useState(false);
+	const [user, setUser] = useState("");
+	const [products, setProducts] = useState();
 	const closeModal = (bool) => {
 		setShowModal(bool);
+	};
+	//Get user details from backend using API call
+	const getUser = () => {
+		return fetch("http://192.168.1.2:4000/getUser")
+			.then((response) => response.json())
+			.then((json) => {
+				setUser(json);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+	//Get product details from backend using API call
+	const getProduct = () => {
+		return fetch("http://192.168.1.2:4000/getProducts")
+			.then((response) => response.json())
+			.then((json) => {
+				setProducts(json);
+				console.log(json);
+			})
+			.catch((error) => {
+				alert(error.message);
+			});
+	};
+
+	useEffect(() => {
+		getProduct();
+		getUser();
+	}, []);
+
+	const itemDetails = ({ item }) => {
+		return (
+			<Card style={{ width: "40%", marginLeft: "6%" }}>
+				<Text>{item.productID}</Text>
+				<Text>{item.productName}</Text>
+				<Text>{item.productPrice}</Text>
+				<Text>{item.shippingCountry}</Text>
+			</Card>
+		);
 	};
 
 	return (
 		<LinearGradientComponent>
+			<View style={{ position: "absolute", top: -60, right: -4, zIndex: 5 }}>
+				<Blue_Button
+					name='Categories'
+					onPress={() => {
+						closeModal(true);
+					}}
+				/>
+			</View>
 			<View style={styles.textContainer}>
-				<Text style={styles.whiteText}>Welcome {auth.currentUser?.email}</Text>
+				<Text style={styles.whiteText}>
+					Welcome {user.fname} {user.lname}
+				</Text>
 				<View style={{ alignItems: "center" }}>
 					<Text style={[styles.whiteText, styles.titleText]}>Shopping Mall</Text>
 					<Text style={[styles.whiteText, styles.lightText]}>Buy your all needs in one place</Text>
@@ -30,15 +81,73 @@ export default function Home(props) {
 				closeModal={(bool) => {
 					setShowModal(bool);
 				}}>
-				<Text>CWx</Text>
+				<Text style={{ fontSize: 22, fontWeight: "bold" }}>Categories</Text>
+				<View style={{ ...styles.hLine, marginBottom: 15, width: "70%" }}></View>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/responsive.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Electronic Devices</Text>
+					</TouchableOpacity>
+				</Card>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/electric-appliance.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Home Appliances</Text>
+					</TouchableOpacity>
+				</Card>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/cosmetics.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Health & Beauty</Text>
+					</TouchableOpacity>
+				</Card>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/toys.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Babies & Toys</Text>
+					</TouchableOpacity>
+				</Card>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/clothes-rack.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Life Style</Text>
+					</TouchableOpacity>
+				</Card>
+				<Card>
+					<TouchableOpacity style={styles.touchingCard}>
+						<Image
+							source={require("../assets/Icons/sports.png")}
+							style={{ width: 35, height: 35, marginHorizontal: 30 }}
+						/>
+						<Text>Sports & Outdoor</Text>
+					</TouchableOpacity>
+				</Card>
 			</PopModal>
-
-			<Blue_Button
-				name='Show Modal'
-				onPress={() => {
-					closeModal(true);
-				}}
-			/>
+			<View style={{ flex: 1 }}>
+				<FlatList
+					data={products}
+					renderItem={itemDetails}
+					keyExtractor={(item) => item.productID}
+					numColumns={2}
+					showsVerticalScrollIndicator={false}
+				/>
+				<View style={{ height: 150 }}></View>
+			</View>
 
 			<StatusBar backgroundColor='#fff' />
 			<TabNavigation navigation={props.navigation}></TabNavigation>
@@ -67,5 +176,19 @@ const styles = StyleSheet.create({
 		width: "90%",
 		opacity: 0.5,
 		marginVertical: 5,
+	},
+	touchingCard: { flexDirection: "row", width: "100%", alignItems: "center" },
+	productGrid: {
+		width: "100%",
+		height: 150,
+		flexDirection: "row",
+		justifyContent: "space-around",
+		alignItems: "center",
+	},
+	productContainer: {
+		width: "45%",
+		height: "100%",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });

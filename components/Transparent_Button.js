@@ -1,5 +1,5 @@
 /** @format */
-
+// This button made for Cancel , go back, sign out, this contain only border and title of button
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 

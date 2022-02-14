@@ -24,17 +24,6 @@ export default function LoginPage(props) {
 	});
 	const { email, password } = loginInfo;
 
-	// !Handle signUp
-	// const handleSignUp = () => {
-	//   auth
-	//     .createUserWithEmailAndPassword(email, password)
-	//     .then((userCredentials) => {
-	//       const user = userCredentials.user;
-	//       console.log(user.email);
-	//     })
-	//     .catch((error) => alert(error.message));
-	// };
-
 	const handleOnChangeText = (value, fieldName) => {
 		setLoginInfo({ ...loginInfo, [fieldName]: value });
 	};

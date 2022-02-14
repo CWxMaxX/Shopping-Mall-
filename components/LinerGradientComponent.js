@@ -1,4 +1,5 @@
 /** @format */
+//This is the basic theme custom component in whole app
 
 import { StyleSheet } from "react-native";
 import React from "react";
