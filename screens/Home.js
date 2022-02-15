@@ -12,11 +12,11 @@ import { FlatList } from "react-native";
 
 export default function Home(props) {
 	const [showModal, setShowModal] = useState(false);
+	const [showProduct, setShowProduct] = useState(false);
 	const [user, setUser] = useState("");
 	const [products, setProducts] = useState();
-	const closeModal = (bool) => {
-		setShowModal(bool);
-	};
+	const [currentProduct, setCurrentProduct] = useState();
+
 	//Get user details from backend using API call
 	const getUser = () => {
 		return fetch("http://192.168.1.2:4000/getUser")
@@ -34,11 +34,15 @@ export default function Home(props) {
 			.then((response) => response.json())
 			.then((json) => {
 				setProducts(json);
-				console.log(json);
+				// console.log(json);
 			})
 			.catch((error) => {
 				alert(error.message);
 			});
+	};
+	const popupProduct = (item) => {
+		setCurrentProduct(item);
+		setShowProduct(true);
 	};
 
 	useEffect(() => {
@@ -48,12 +52,18 @@ export default function Home(props) {
 
 	const itemDetails = ({ item }) => {
 		return (
-			<Card style={{ width: "40%", marginLeft: "6%" }}>
-				<Text>{item.productID}</Text>
-				<Text>{item.productName}</Text>
-				<Text>{item.productPrice}</Text>
-				<Text>{item.shippingCountry}</Text>
-			</Card>
+			<TouchableOpacity
+				style={{ width: "40%", marginLeft: "6%" }}
+				onPress={() => {
+					popupProduct(item);
+				}}>
+				<Card style={{ width: "100%" }}>
+					<Text>{item.productID}</Text>
+					<Text>{item.productName}</Text>
+					<Text>{item.productPrice}</Text>
+					<Text>{item.shippingCountry}</Text>
+				</Card>
+			</TouchableOpacity>
 		);
 	};
 
@@ -63,7 +73,7 @@ export default function Home(props) {
 				<Blue_Button
 					name='Categories'
 					onPress={() => {
-						closeModal(true);
+						setShowModal(true);
 					}}
 				/>
 			</View>
@@ -76,6 +86,7 @@ export default function Home(props) {
 					<Text style={[styles.whiteText, styles.lightText]}>Buy your all needs in one place</Text>
 				</View>
 			</View>
+			{/* Popup modal for categories */}
 			<PopModal
 				visible={showModal}
 				closeModal={(bool) => {
@@ -138,6 +149,17 @@ export default function Home(props) {
 					</TouchableOpacity>
 				</Card>
 			</PopModal>
+			{/* Popup modal for products */}
+			<PopModal
+				visible={showProduct}
+				closeModal={(bool) => {
+					setShowProduct(bool);
+				}}>
+				<Text>{currentProduct["productID"]}</Text>
+				<Text>{currentProduct["productName"]}</Text>
+				<Text>{currentProduct["productPrice"]}</Text>
+				<Text>{currentProduct["shippingCountry"]}</Text>
+			</PopModal>
 			<View style={{ flex: 1 }}>
 				<FlatList
 					data={products}
@@ -148,7 +170,6 @@ export default function Home(props) {
 				/>
 				<View style={{ height: 150 }}></View>
 			</View>
-
 			<StatusBar backgroundColor='#fff' />
 			<TabNavigation navigation={props.navigation}></TabNavigation>
 		</LinearGradientComponent>
