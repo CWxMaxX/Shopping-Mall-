@@ -27,9 +27,44 @@ export default function Home(props) {
 		image: "",
 	});
 
+	//Add Products into Saved Tab
+	const postSaved = () => {
+		fetch("http://192.168.1.2:4000/postSavedProduct", {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productID: currentProduct.productID,
+				productName: currentProduct.productName,
+				productPrice: currentProduct.productPrice,
+				shippingCountry: currentProduct.shippingCountry,
+				image: currentProduct.image,
+			}),
+		});
+	};
+	//Add Products into Cart Tab
+	const postCart = () => {
+		fetch("http://192.168.1.2:4000/postAddCart", {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productID: currentProduct.productID,
+				productName: currentProduct.productName,
+				productPrice: currentProduct.productPrice,
+				shippingCountry: currentProduct.shippingCountry,
+				image: currentProduct.image,
+			}),
+		});
+	};
+
 	//Get user details from backend using API call
 	const getUser = () => {
-		return fetch("http://192.168.1.2:4000/getUser")
+		return fetch("http://192.168.1.2:4000/getUser/001")
 			.then((response) => response.json())
 			.then((json) => {
 				setUser(json);
@@ -194,12 +229,14 @@ export default function Home(props) {
 				<View style={styles.iconsCartAndSave}>
 					<Pressable
 						onPress={() => {
+							postCart();
 							Alert.alert("Add to cart", "Selected item successfully added to cart!");
 						}}>
 						<MaterialIcons name='add-shopping-cart' size={35} color='black' />
 					</Pressable>
 					<Pressable
 						onPress={() => {
+							postSaved();
 							Alert.alert("Saved", "Selected item successfully saved !");
 						}}>
 						<MaterialCommunityIcons name='bookmark' size={35} color='black' />

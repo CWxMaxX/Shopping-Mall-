@@ -15,7 +15,7 @@ import LinerGradientComponent from "../components/LinerGradientComponent";
 export default function AccountPage(props) {
 	const [user, setUser] = useState("");
 	const getUser = () => {
-		return fetch("http://192.168.1.2:4000/getUser")
+		return fetch("http://192.168.1.2:4000/getUser/001")
 			.then((response) => response.json())
 			.then((json) => {
 				setUser(json);

@@ -6,6 +6,12 @@ export const globalStyles = StyleSheet.create({
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
+		color: "#000",
+	},
+	titleWhite: {
+		fontSize: 26,
+		fontWeight: "bold",
+		color: "#fff",
 	},
 	subtitle: {
 		fontSize: 16,

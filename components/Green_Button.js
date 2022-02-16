@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native";
 
 export default function Green_Button(props) {
 	return (
-		<TouchableOpacity style={styles.button} {...props}>
+		<TouchableOpacity {...props} style={{ ...styles.button, ...props.style }}>
 			<Text style={styles.whiteText}>{props.name}</Text>
 		</TouchableOpacity>
 	);
