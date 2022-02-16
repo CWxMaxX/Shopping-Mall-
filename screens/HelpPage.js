@@ -2,15 +2,12 @@
 
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
 import Modal from "../components/Modal";
 import InputComponent from "../components/InputComponent";
-import { TouchableOpacity } from "react-native";
 import Blue_Button from "../components/Blue_Button";
 import Transparent_Button from "../components/Transparent_Button";
 import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import TabNavigation from "../navigation/TabNavigation";
 import LinerGradientComponent from "../components/LinerGradientComponent";
 
 export default function HelpPage(props) {

@@ -2,20 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Pressable } from "react-native";
 import Blue_Button from "../components/Blue_Button";
 import PopModal from "../components/PopModal";
 import LinearGradientComponent from "../components/LinerGradientComponent";
 import TabNavigation from "../navigation/TabNavigation";
 import Card from "../components/Card";
 import { FlatList } from "react-native";
+import { globalStyles } from "../styles/globalStyles";
+import Green_Button from "../components/Green_Button";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Home(props) {
 	const [showModal, setShowModal] = useState(false);
 	const [showProduct, setShowProduct] = useState(false);
 	const [user, setUser] = useState("");
-	const [products, setProducts] = useState();
-	const [currentProduct, setCurrentProduct] = useState();
+	const [products, setProducts] = useState(); //Flat list product data
+	const [currentProduct, setCurrentProduct] = useState({
+		productID: "",
+		productName: "",
+		productPrice: "",
+		shippingCountry: "",
+		image: "",
+	});
 
 	//Get user details from backend using API call
 	const getUser = () => {
@@ -40,28 +50,35 @@ export default function Home(props) {
 				alert(error.message);
 			});
 	};
+
+	//Show popup Products
 	const popupProduct = (item) => {
 		setCurrentProduct(item);
 		setShowProduct(true);
 	};
 
+	//Getting data from server
 	useEffect(() => {
 		getProduct();
 		getUser();
 	}, []);
-
+	// Flat list rendering
 	const itemDetails = ({ item }) => {
 		return (
 			<TouchableOpacity
 				style={{ width: "40%", marginLeft: "6%" }}
-				onPress={() => {
-					popupProduct(item);
-				}}>
+				onPress={() => popupProduct(item)}>
 				<Card style={{ width: "100%" }}>
-					<Text>{item.productID}</Text>
-					<Text>{item.productName}</Text>
-					<Text>{item.productPrice}</Text>
-					<Text>{item.shippingCountry}</Text>
+					<View style={styles.imageThumbnail}>
+						<Image
+							source={{ uri: item.image }}
+							style={{ width: 90, height: 80, flex: 1, margin: 5 }}
+							resizeMode='center'
+						/>
+					</View>
+
+					<Text style={globalStyles.subtitle}>{item.productName}</Text>
+					<Text style={globalStyles.price}>Rs: {item.productPrice}</Text>
 				</Card>
 			</TouchableOpacity>
 		);
@@ -149,17 +166,48 @@ export default function Home(props) {
 					</TouchableOpacity>
 				</Card>
 			</PopModal>
+
 			{/* Popup modal for products */}
 			<PopModal
 				visible={showProduct}
 				closeModal={(bool) => {
 					setShowProduct(bool);
 				}}>
-				<Text>{currentProduct["productID"]}</Text>
-				<Text>{currentProduct["productName"]}</Text>
-				<Text>{currentProduct["productPrice"]}</Text>
-				<Text>{currentProduct["shippingCountry"]}</Text>
+				<View style={styles.imageContainer}>
+					<Image
+						source={{
+							uri: currentProduct["image"],
+						}}
+						style={{ width: 200, height: 200, flex: 1 }}
+						resizeMode='center'
+					/>
+				</View>
+
+				<Text style={globalStyles.title}>{currentProduct["productName"]}</Text>
+				<Text style={globalStyles.subtitle}>Rs: {currentProduct["productPrice"]}</Text>
+				<Text style={globalStyles.price}>Shipping from {currentProduct["shippingCountry"]}</Text>
+				<Green_Button
+					name='Buy Now'
+					onPress={() => {
+						Alert.alert("Warring", "Section is under development");
+					}}></Green_Button>
+				<View style={styles.iconsCartAndSave}>
+					<Pressable
+						onPress={() => {
+							Alert.alert("Add to cart", "Selected item successfully added to cart!");
+						}}>
+						<MaterialIcons name='add-shopping-cart' size={35} color='black' />
+					</Pressable>
+					<Pressable
+						onPress={() => {
+							Alert.alert("Saved", "Selected item successfully saved !");
+						}}>
+						<MaterialCommunityIcons name='bookmark' size={35} color='black' />
+					</Pressable>
+				</View>
 			</PopModal>
+
+			{/* Item List */}
 			<View style={{ flex: 1 }}>
 				<FlatList
 					data={products}
@@ -211,5 +259,30 @@ const styles = StyleSheet.create({
 		height: "100%",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	imageThumbnail: {
+		width: 120,
+		height: 90,
+		backgroundColor: "#F6F6F6",
+		borderRadius: 20,
+		alignItems: "center",
+		borderColor: "#C4C4C4",
+		borderWidth: 0.5,
+		borderStyle: "solid",
+	},
+	imageContainer: {
+		width: 300,
+		height: 300,
+		alignItems: "center",
+	},
+	iconsCartAndSave: {
+		width: 80,
+		height: 40,
+		position: "absolute",
+		top: 10,
+		left: 10,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 });
