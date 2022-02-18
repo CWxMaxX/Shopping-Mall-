@@ -44,7 +44,7 @@ export default function Home(props) {
 			}),
 		});
 	};
-	//Add Products into Cart Tab
+	//Add Products into Saved Tab
 	const postCart = () => {
 		fetch("http://192.168.1.2:4000/postAddCart", {
 			method: "POST",

@@ -1,6 +1,6 @@
 /** @format */
 
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Alert } from "react-native";
 import React from "react";
 import LinerGradientComponent from "../components/LinerGradientComponent";
 import TabNavigation from "../navigation/TabNavigation";
@@ -24,11 +24,7 @@ export default function Cart(props) {
 			});
 	};
 	const showTotal = () => {
-		if (parseInt(totalPrice)) {
-			return true;
-		} else {
-			return false;
-		}
+		return !!parseInt(totalPrice);
 	};
 	const calTotal = () => {
 		let total = 0;
@@ -83,13 +79,20 @@ export default function Cart(props) {
 					numColumns={2}
 					showsVerticalScrollIndicator={false}
 				/>
-				<View style={{ height: 150 }}></View>
+				<View style={{height: 150}}/>
 			</View>
 			{showTotal() && (
 				<View style={styles.totalPriceContainer}>
 					<Text style={globalStyles.titleWhite}>Rs {totalPrice}.00/=</Text>
 				</View>
 			)}
+			<Green_Button
+				name='Checkout'
+				onPress={() => {
+					Alert.alert("Warning", "Section is under development");
+				}}
+				style={styles.greenButton}
+			/>
 			{/* Red Button */}
 			<Green_Button
 				name='Clear Cart'
@@ -99,7 +102,7 @@ export default function Cart(props) {
 					getCart();
 				}}
 			/>
-			<TabNavigation navigation={props.navigation}></TabNavigation>
+			<TabNavigation navigation={props.navigation}/>
 		</LinerGradientComponent>
 	);
 }
@@ -120,8 +123,12 @@ const styles = StyleSheet.create({
 		height: 50,
 		// backgroundColor: "#F6F6F6",
 		position: "absolute",
-		bottom: 250,
+		bottom: 280,
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	greenButton: {
+		position: "absolute",
+		bottom: 230,
 	},
 });

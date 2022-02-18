@@ -50,14 +50,14 @@ export default function CreateAccountPAge(props) {
 	const handleCreateAccount = () => {
 		console.log(newUser);
 		if (
-			newUser.name == "" ||
-			newUser.email == "" ||
-			newUser.newPassword == "" ||
-			newUser.re_newPassword == "" ||
-			newUser.shoppingAddress == ""
+			newUser.name === "" ||
+			newUser.email === "" ||
+			newUser.newPassword === "" ||
+			newUser.re_newPassword === "" ||
+			newUser.shoppingAddress === ""
 		) {
 			alert("Check Credentials Again");
-		} else if (newUser.newPassword != newUser.re_newPassword) {
+		} else if (newUser.newPassword !== newUser.re_newPassword) {
 			alert("Password does not match");
 		} else if (newUser.newPassword.length < 8 || newUser.newPassword > 20) {
 			alert("Password length must be in 8 to 20 characters");

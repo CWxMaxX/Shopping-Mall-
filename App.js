@@ -11,7 +11,7 @@ import NavigationStack from './navigation/NavigationStack';
 
 export default function App() {
   return (
-    <NavigationStack></NavigationStack>
+    <NavigationStack/>
     // <NavigationContainer>
     //   <Tab.Navigator>
     //     <Tab.Screen name="Home" component={Home} />
