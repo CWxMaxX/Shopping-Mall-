@@ -9,7 +9,7 @@ import CreateAccountPAge from "./screens/CreateAccountPAge";
 
 export default function App() {
   return (
-    // <NavigationStack />
+    <NavigationStack />
     // <NavigationContainer>
     //   <Tab.Navigator>
     //     <Tab.Screen name="Home" component={Home} />
@@ -20,7 +20,7 @@ export default function App() {
     // </NavigationContainer>
     // <LoginPage />
     // <AccountPage />
-    <CreateAccountPAge />
+    // <CreateAccountPAge />
     // <HelpPage />
     // <Home />
     // <NavigationStack></NavigationStack>

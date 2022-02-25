@@ -1,31 +1,38 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
+  Alert,
+  FlatList,
+  Image,
+  Pressable,
   StyleSheet,
   Text,
-  View,
-  Image,
   TouchableOpacity,
-  Alert,
-  Pressable,
+  View,
 } from "react-native";
 import Blue_Button from "../components/Blue_Button";
 import PopModal from "../components/PopModal";
 import LinearGradientComponent from "../components/LinerGradientComponent";
 import TabNavigation from "../navigation/TabNavigation";
 import Card from "../components/Card";
-import { FlatList } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import Green_Button from "../components/Green_Button";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { auth } from "../firebase";
 
 export default function Home(props) {
   const [showModal, setShowModal] = useState(false);
   const [showProduct, setShowProduct] = useState(false);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({
+    uid: "",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    shippingAddress: "",
+  });
+
   const [products, setProducts] = useState(); //Flat list product data
   const [currentProduct, setCurrentProduct] = useState({
     productID: "",
@@ -34,6 +41,7 @@ export default function Home(props) {
     shippingCountry: "",
     image: "",
   });
+  const uID = auth.currentUser.uid;
 
   //Add Products into Saved Tab
   const postSaved = () => {
@@ -72,10 +80,11 @@ export default function Home(props) {
 
   //Get user details from backend using API call
   const getUser = () => {
-    return fetch("http://192.168.1.2:8080/api/v1/user/getUser")
+    return fetch("http://192.168.1.3:8080/api/v1/user/getUser/" + uID)
       .then((response) => response.json())
       .then((json) => {
         setUser(json);
+        console.log(user);
       })
       .catch((error) => {
         console.error(error);
@@ -103,7 +112,7 @@ export default function Home(props) {
   //Getting data from server
   useEffect(() => {
     // getProduct();
-    // getUser();
+    getUser();
   }, []);
   // Flat list rendering
   const itemDetails = ({ item }) => {
@@ -139,7 +148,7 @@ export default function Home(props) {
         />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.whiteText}>Welcome {user}</Text>
+        <Text style={styles.whiteText}>Welcome {user.name}</Text>
         <View style={{ alignItems: "center" }}>
           <Text style={[styles.whiteText, styles.titleText]}>
             Shopping Mall

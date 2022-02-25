@@ -33,11 +33,11 @@ export default function LoginPage(props) {
   };
 
   useEffect(() => {
-    // return auth.onAuthStateChanged((user) => {
-    //   if (user) {
-    //     props.navigation.replace("Home");
-    //   }
-    // });
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        props.navigation.replace("Home");
+      }
+    });
   }, []);
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
