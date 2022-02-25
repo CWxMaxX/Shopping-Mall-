@@ -5,8 +5,9 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
 export default function Blue_Button(props) {
+
 	return (
-		<TouchableOpacity style={styles.button} {...props}>
+		<TouchableOpacity style={styles.button} {...props}   >
 			<Text style={styles.whiteText}>{props.name}</Text>
 		</TouchableOpacity>
 	);
@@ -21,6 +22,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		borderRadius: 30,
 		margin: 10,
+
+
 	},
 	whiteText: {
 		color: "#fff",

@@ -1,17 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native';
-import AccountPage from './screens/AccountPage';
-import CreateAccountPage from './screens/CreateAccountPAge';
-import HelpPage from './screens/HelpPage';
-import LoginPage from './screens/LoginPage';
-import Home from './screens/Home';
-import PopModal from './components/PopModal';
-import NavigationStack from './navigation/NavigationStack';
+import AccountPage from "./screens/AccountPage";
 
-
+import HelpPage from "./screens/HelpPage";
+import LoginPage from "./screens/LoginPage";
+import Home from "./screens/Home";
+import PopModal from "./components/PopModal";
+import NavigationStack from "./navigation/NavigationStack";
+import CreateAccountPAge from "./screens/CreateAccountPAge";
 
 export default function App() {
   return (
-    <NavigationStack/>
+    // <NavigationStack />
     // <NavigationContainer>
     //   <Tab.Navigator>
     //     <Tab.Screen name="Home" component={Home} />
@@ -22,12 +20,9 @@ export default function App() {
     // </NavigationContainer>
     // <LoginPage />
     // <AccountPage />
-    // <CreateAccountPAge />
+    <CreateAccountPAge />
     // <HelpPage />
     // <Home />
     // <NavigationStack></NavigationStack>
-
   );
 }
-
-

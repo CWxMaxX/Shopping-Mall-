@@ -9,4 +9,4 @@ Border 2  : #C4C4C4
 
 Green Color : #43B833
 
-Red Color : #F4511E
+Red Color : "#F4511E"
